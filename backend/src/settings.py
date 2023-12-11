@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
+    'chats.apps.ChatsConfig',
     # 3rd party apps
     'corsheaders',
     'rest_framework',

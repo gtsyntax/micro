@@ -36,9 +36,12 @@ const postCharCount = computed(() => {
     return postContent.value.trim().length
 })
 
+const emit = defineEmits(['closePostModal'])
+
 function publishPost() {
     console.log(postContent.value)
     postStore.publishPost(postContent.value)
+    emit('closePostModal')
     // postStore.publishNewTweet(tweetContent.value)
     // tweetContent.value = "";
     // showTweetModal.value = false;

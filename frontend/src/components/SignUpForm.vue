@@ -41,6 +41,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router'; 
+import { useAccountStore } from '@/stores/account';
 
 const formData = ref({
   email: '',
@@ -50,6 +52,9 @@ const formData = ref({
   last_name: ''
 })
 
+const accountStore = useAccountStore()
+const router = useRouter()
+
 async function handleRegister() {
   await axios.post('/api/accounts/register/', formData.value)
   .then(response => {
@@ -57,6 +62,29 @@ async function handleRegister() {
   }).catch(error => {
     console.log('error', error)
   })
+    handleLogin()
+}
+
+async function handleLogin() {
+  console.log('Login data:', formData.value)
+  await axios.post('/api/accounts/token/', formData.value)
+  .then(response => {
+    accountStore.setToken(response.data)
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access;
+  }).catch(error => {
+    console.log('error', error)
+  })
+
+
+  await axios.get('/api/accounts/profile/')
+  .then(response => {
+    accountStore.setUserInfo(response.data)
+  }).catch(error => {
+    console.log('error', error)
+  })
+  
+    // if the user data is fetched then the user should get redirected
+    router.push({ name: "profile", params: {username: accountStore.user.username} })
 }
 </script>
 

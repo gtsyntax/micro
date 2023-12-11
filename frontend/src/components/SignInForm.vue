@@ -23,10 +23,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router'; 
 import { useAccountStore } from '@/stores/account';
 
 const formData = ref({ email: '', password: ''})
 const accountStore = useAccountStore()
+const router = useRouter()
 
 async function handleLogin() {
   console.log('Login data:', formData.value)
@@ -45,6 +47,10 @@ async function handleLogin() {
   }).catch(error => {
     console.log('error', error)
   })
+  
+    // if the user data is fetched then the user should get redirected
+    router.push({ name: "profile", params: {username: accountStore.user.username} })
+
 }
 </script>
 

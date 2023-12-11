@@ -1,4 +1,5 @@
 <template>
+    <RouterLink :to="{name: 'status', params: {postId:props.post.id}}">
     <div class="tweet-card">
         <img class="user-avatar" src="user-avatar.jpg" alt="User Avatar">
         <div class="user-info">
@@ -9,10 +10,10 @@
         <div class="timestamp">{{ humanizedDate }}</div>
         <div class="interaction-buttons">
             <div class="interaction-buttons-left-col">
-                <span class="interaction-button"><ReplyIcon /> 32K replies</span> <!-- Reply button -->
-                <span class="interaction-button"><RepostIcon /> 12K reposts</span> <!-- Retweet button -->
-                <span class="interaction-button"><LikeIcon /> 243K likes</span> <!-- Like button -->
-                <span class="interaction-button"><ViewIcon /> 45.5M views</span> <!-- View button -->
+                <span class="interaction-button"><ReplyIcon /> 0 replies</span> <!-- Reply button -->
+                <span class="interaction-button"><RepostIcon /> 0 reposts</span> <!-- Retweet button -->
+                <span class="interaction-button"><LikeIcon /> 0 likes</span> <!-- Like button -->
+                <span class="interaction-button"><ViewIcon /> 0 views</span> <!-- View button -->
             </div>
 
             <div class="interaction-buttons-right-col">
@@ -20,6 +21,7 @@
             </div>
         </div>
     </div>
+    </RouterLink>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +53,7 @@ const humanizedDate = computed(() => {
     border-radius: 10px;
     padding: 10px;
     display: inline-block;
+    color: #000;
 }
 
 .user-avatar {

@@ -17,7 +17,7 @@
 
       <div class="sign-in-area">
         <h5 class="heading-sm">Already have an account?</h5>
-        <button class="base-btn" v-on:click="openSignInModal">Sign in</button>
+        <button class="base-btn" @click="openSignInModal">Sign in</button>
       </div>
   </div>
 

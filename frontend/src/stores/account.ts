@@ -17,6 +17,8 @@ export const useAccountStore = defineStore('account', () => {
         refresh: null,
     })
 
+    const currentUserPosts = ref([])
+
     function storeInit() {
         if (localStorage.getItem('user.access')) {
             console.log('User has access', localStorage.getItem('user.access'))
@@ -107,5 +109,15 @@ export const useAccountStore = defineStore('account', () => {
         })
     }
 
-    return { user, storeInit, setToken, setUserInfo, }
+    async function getCurrentUserPosts() {
+        await axios.get(`/api/posts/users/${user.value.username}`)
+            .then(response => {
+                console.log("current user posts", response.data)
+                currentUserPosts.value = response.data
+            }).catch(error => {
+                console.log('error', error)
+            })
+    }
+
+    return { user, storeInit, setToken, setUserInfo, currentUserPosts, getCurrentUserPosts }
 })

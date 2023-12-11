@@ -10,9 +10,24 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/profile/:username',
+      path: '/:username',
       name: 'profile',
-      component: () => import('@/views/ProfileView.vue')
+      component: () => import('@/views/ProfileView.vue'),
+    },
+    {
+        path: '/:username/status/:postId',
+        name: 'status', 
+        component: () => import('@/views/PostDetailView.vue'),
+    },
+    {
+      path: '/timeline',
+      name: 'timeline',
+      component: () => import('@/views/TimelineView.vue')
+    },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: () => import('@/views/MessageView.vue')
     },
   ]
 })

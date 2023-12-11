@@ -17,6 +17,7 @@ export const useProfileStore = defineStore('profile', () => {
     })
 
     const userPosts = ref([])
+    const userFollowers = ref([])
 
     function setUserDetails(userInfo) {
         userDetails.value.id = userInfo.id
@@ -32,22 +33,32 @@ export const useProfileStore = defineStore('profile', () => {
     }
 
     async function getUserDetails(username) {
-        await axios.get(`/api/accounts/users/${username} `)
+        await axios.get(`/api/accounts/users/${username}`)
             .then(response => {
                 setUserDetails(response.data);
+                getUserFollowers(username);
             }).catch(error => {
                 console.log('error', error)
             })
     }
 
-    async function getUserPosts(username) {
-        await axios.get(`/api/posts/users/${username} `)
+    const getUserPosts = async username => {
+        await axios.get(`/api/posts/users/${username}`)
             .then(response => {
+                console.log("user posts", response.data)
                 userPosts.value = response.data
             }).catch(error => {
                 console.log('error', error)
             })
     }
 
-    return { userDetails, userPosts, getUserDetails, getUserPosts }
+    async function getUserFollowers(username) {
+        await axios.get(`/api/accounts/users/${username}/followers`)
+            .then(response => {
+                console.log(response.data)
+                userFollowers.value = response.data
+            }).catch(error => console.log(error))
+    }
+
+    return { userDetails, userPosts, getUserDetails, getUserPosts, userFollowers, getUserFollowers }
 })

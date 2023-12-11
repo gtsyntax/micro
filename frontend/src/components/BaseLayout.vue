@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <aside class="left_column">
-            <RouterLink to="#">
+            <RouterLink to="/timeline">
                 <HomeIcon />
             </RouterLink>
 
@@ -13,7 +13,7 @@
                 <NotificationIcon />
             </RouterLink>
 
-            <RouterLink to="#">
+            <RouterLink to="/messages">
                 <MessageIcon />
             </RouterLink>
 
@@ -25,7 +25,7 @@
                 <BookmarkIcon />
             </RouterLink>
 
-            <RouterLink to="">
+            <RouterLink :to="{name: 'profile', params: {username:username}}">
                 <ProfileIcon />
             </RouterLink>
 
@@ -34,19 +34,16 @@
         <main class="center_column">
             <slot name="center_column"/>
         </main>
-        <aside class="right_column">
-            <slot name="right_column"/>
-        </aside>
     </div>
     <Modal ref="childPostModal">
         <template v-slot:modal-body>
-            <PostForm />
+            <PostForm @closePostModal="closePostModal"/>
         </template>
     </Modal>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import HomeIcon from './icons/IconHome.vue';
 import SearchIcon from './icons/IconSearch.vue';
@@ -59,12 +56,21 @@ import CreateIcon from './icons/IconCreate.vue';
 
 import PostForm from './PostForm.vue';
 import Modal from './Modal.vue';
+import { useAccountStore } from "@/stores/account";
+
 const childPostModal = ref(null)
+const username = ref(null)
+const accountStore = useAccountStore()
+
+username.value = accountStore.user.username;
 
 function openPostModal() {
     childPostModal.value.openModal()
 }
 
+function closePostModal() {
+    childPostModal.value.closeModal()
+}
 </script>
 
 <style>
@@ -83,7 +89,6 @@ function openPostModal() {
     align-items: center;
     gap: 30px;
     padding-top: 20px;
-
 }
 
 .center_column {
@@ -100,7 +105,7 @@ function openPostModal() {
 
 @media (min-width: 768px) {
     .wrapper {
-        grid-template-columns: 1fr 1.5fr 1fr;
+        grid-template-columns: 1fr 4fr;
     }
 }
 </style>
