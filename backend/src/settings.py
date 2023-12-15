@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
     'chats.apps.ChatsConfig',
+    'timeline.apps.TimelineConfig',
     # 3rd party apps
     'corsheaders',
     'rest_framework',

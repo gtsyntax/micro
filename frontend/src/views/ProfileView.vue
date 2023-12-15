@@ -26,18 +26,17 @@
                 </div>
             </div>
         </div>
-        <section class="empty-list" v-if="userPosts < 1">
-            <h2>You don't have any post yet</h2>
-        </section>
-        <section class="post-list" v-else>
-            <PostItem v-for="post in postList" :post="post" :key="post.id"/>
-        </section>
+        <div class="empty-post-list" v-if="postList.length === 0">
+            <p>POSTS OF USERS YOU FOLLOW WILL APPEAR HERE.</p>
+        </div>
+        <PostList :posts="postList" v-else/>
     </template>
   </BaseLayout>
 </template>
 
 <script setup lang="ts">
 import BaseLayout from '@/components/BaseLayout.vue';
+import PostList from '@/components/PostList.vue';
 
 import axios from "axios";
 import { computed, ref, watchEffect } from 'vue';
@@ -188,22 +187,5 @@ const messageUser = username => {
     color: white;
     border: none;
     cursor: pointer;
-}
-
-.post-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
-    gap: 1rem;
-}
-
-.empty-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    color: #777;
-    margin-top: 40px;
 }
 </style>

@@ -1,35 +1,54 @@
 <template>
     <div class="wrapper">
         <aside class="left_column">
-            <RouterLink to="/timeline">
-                <HomeIcon />
-            </RouterLink>
+            <div class="top">
+                <RouterLink to="/home">
+                    <HomeIcon />
+                    <h2 class="menu-name">Home</h2>
+                </RouterLink>
 
-            <RouterLink to="#">
-                <SearchIcon />
-            </RouterLink>
+                <RouterLink to="#">
+                    <SearchIcon />
+                    <h2 class="menu-name">Explore</h2>
+                </RouterLink>
 
-            <RouterLink to="#">
-                <NotificationIcon />
-            </RouterLink>
+                <RouterLink to="#">
+                    <NotificationIcon />
+                    <h2 class="menu-name">Notifications</h2>
+                </RouterLink>
 
-            <RouterLink to="/messages">
-                <MessageIcon />
-            </RouterLink>
+                <RouterLink to="/messages">
+                    <MessageIcon />
+                    <h2 class="menu-name">Messages</h2>
+                </RouterLink>
 
-            <RouterLink to="#">
-                <ContactIcon />
-            </RouterLink>
+                <RouterLink to="#">
+                    <ContactIcon />
+                    <h2 class="menu-name">Communities</h2>
+                </RouterLink>
 
-            <RouterLink to="#">
-                <BookmarkIcon />
-            </RouterLink>
+                <RouterLink to="#">
+                    <BookmarkIcon />
+                    <h2 class="menu-name">Bookmarks</h2>
+                </RouterLink>
 
-            <RouterLink :to="{name: 'profile', params: {username:username}}">
-                <ProfileIcon />
-            </RouterLink>
+                <RouterLink :to="{name: 'profile', params: {username:username}}">
+                    <ProfileIcon />
+                    <h2 class="menu-name">Profile</h2>
+                </RouterLink>
 
-            <CreateIcon @click="openPostModal" class="create_icon"/>
+                <RouterLink to="" @click="openPostModal">
+                    <CreateIcon class="create_icon"/>
+                    <h2 class="menu-name">Post</h2>
+                </RouterLink>
+            </div>
+
+            <div class="bottom">
+                <RouterLink to="#">
+                    <LogoutIcon />
+                    <h2 class="menu-name">Logout</h2>
+                </RouterLink>
+            </div>
         </aside>
         <main class="center_column">
             <slot name="center_column"/>
@@ -53,6 +72,7 @@ import ContactIcon from './icons/IconContact.vue';
 import BookmarkIcon from './icons/IconBookmark.vue';
 import ProfileIcon from './icons/IconProfile.vue';
 import CreateIcon from './icons/IconCreate.vue';
+import LogoutIcon from './icons/IconLogout.vue';
 
 import PostForm from './PostForm.vue';
 import Modal from './Modal.vue';
@@ -83,24 +103,30 @@ function closePostModal() {
     grid-template-columns: 70px 1fr;
 }
 
+.menu-name {
+    display: none;
+}
+
 .left_column {
+    border-right: 1px solid #ccc;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 30px;
-    padding-top: 20px;
+    padding: 1rem 0;
 }
 
-.center_column {
-    padding: 0 1rem;
+.left_column .top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex: 1;
+    gap: 2rem;
 }
 
-/* .right_column {
-    border: 1px solid red;
-} */
-
-.create_icon {
-    cursor: pointer;
+.left_column .top a,
+.left_column .bottom a {
+    color: #000;
 }
 
 @media (min-width: 768px) {

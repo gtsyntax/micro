@@ -104,21 +104,22 @@
 .container {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    margin-top: 20px;
-    height: 90vh;
+    height: 100vh;
 }
 
 .contacts {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    border-right: 1px solid #ccc;
 }
 
 .contact-item {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 1rem;
+    padding: 1rem;
 }
+
 .contact-item-info header {
     display: flex;
     justify-content: space-between;
@@ -136,6 +137,8 @@
 .chat-area {
     display: flex;
     flex-direction: column;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
 }
 
 .chat-history {
