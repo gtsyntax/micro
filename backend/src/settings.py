@@ -30,6 +30,10 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'chats.apps.ChatsConfig',
     'timeline.apps.TimelineConfig',
+    'comments.apps.CommentsConfig',
+    'bookmarks.apps.BookmarksConfig',
+    'likes.apps.LikesConfig',
+    'reposts.apps.RepostsConfig',
     # 3rd party apps
     'corsheaders',
     'rest_framework',

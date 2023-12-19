@@ -7,4 +7,6 @@ urlpatterns = [
     path('api/posts/', include('posts.urls')),
     path('api/chats/', include('chats.urls')),
     path('api/home-timeline/', include('timeline.urls')),
+    path('api/comments/', include('comments.urls')),
+    path('api/bookmarks/', include('bookmarks.urls')),
 ]
