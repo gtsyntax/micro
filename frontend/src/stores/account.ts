@@ -110,7 +110,7 @@ export const useAccountStore = defineStore('account', () => {
     }
 
     async function getCurrentUserPosts() {
-        await axios.get(`/api/posts/users/${user.value.username}`)
+        await axios.get(`/api/posts/my_posts/`)
             .then(response => {
                 console.log("current user posts", response.data)
                 currentUserPosts.value = response.data

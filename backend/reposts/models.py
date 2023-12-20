@@ -1,7 +1,9 @@
+import uuid
 from django.db import models
 from django.conf import settings
 
 class Repost(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reposts")
     original_post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name="reposts")
     created_at = models.DateTimeField(auto_now_add=True)

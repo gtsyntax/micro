@@ -14,6 +14,6 @@ def repost_post(request, post_id):
     # Check if the user already reposted the post
     if not Repost.objects.filter(user=user, original_post=original_post).exists():
         Repost.objects.create(user=user, original_post=original_post)
-        serializer = PostSerializer(post)
+        serializer = PostSerializer(original_post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response({"message": "You already reposted this post."}, status=status.HTTP_400_BAD_REQUEST)

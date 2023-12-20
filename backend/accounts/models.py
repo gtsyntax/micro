@@ -51,6 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.username
     
 class Contact(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_follower = models.ForeignKey('CustomUser', related_name='follower_users', on_delete=models.CASCADE)
     user_following = models.ForeignKey('CustomUser', related_name='following_user', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

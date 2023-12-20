@@ -6,5 +6,5 @@ from .api import (
 
 urlpatterns = [
         path('', get_all_comments, name='get-all-comments'),
-        path('<uuid:post_id>/create/', create_comment, name='create-comment'),
+        path('<uuid:post_id>/create/', create_comment, name='create_comment_api'),
 ]

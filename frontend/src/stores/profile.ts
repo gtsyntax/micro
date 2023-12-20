@@ -43,7 +43,7 @@ export const useProfileStore = defineStore('profile', () => {
     }
 
     const getUserPosts = async username => {
-        await axios.get(`/api/posts/users/${username}`)
+        await axios.get(`/api/posts/${username}/all_posts/`)
             .then(response => {
                 console.log("user posts", response.data)
                 userPosts.value = response.data

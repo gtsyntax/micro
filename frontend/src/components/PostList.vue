@@ -1,5 +1,5 @@
 <template>
-    <div class="tweet" v-for="post in props.posts">
+    <div class="tweet" v-for="post in props.posts" :key="post.id">
         <RouterLink :to="{name: 'status', params: {username: post.user.username, postId: post.id}}">
             <img src="https://picsum.photos/150/" alt="Profile Picture" class="profile-picture">
             <div class="content">
@@ -15,15 +15,15 @@
         </RouterLink>
         <div class="icons">
             <div class="stats">
-                <div class="stats-item">
+                <div class="stats-item reply-btn" @click="addCommentToPost(post.id)">
                     <ReplyIcon />
                     0
                 </div>
-                <div class="stats-item">
+                <div class="stats-item repost-btn" @click="repostPost(post.id)">
                     <RepostIcon />
                     0
                 </div>
-                <div class="stats-item">
+                <div class="stats-item like-btn" @click="likePost(post.id)">
                     <LikeIcon />
                     0
                 </div>
@@ -57,6 +57,18 @@ import { formatRelativeTime } from '@/utils/formatTime';
 const props = defineProps({
     posts: Array
 })
+
+const addCommentToPost = (postId) => {
+    console.log(`${postId} comment added`);
+}
+
+const repostPost = (postId) => {
+    console.log(`${postId} reposted`);
+}
+
+const likePost = (postId) => {
+    console.log(`${postId} liked`);
+}
 </script>
 
 <style scoped>
@@ -121,5 +133,18 @@ a {
     display: flex;
     gap: 5px;
     align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.reply-btn:hover {
+    color: rgb(35, 152, 231);
+}
+
+.repost-btn:hover {
+    color: rgb(0, 186, 124);
+}
+
+.like-btn:hover {
+    color: rgb(249, 24, 128);
 }
 </style>
