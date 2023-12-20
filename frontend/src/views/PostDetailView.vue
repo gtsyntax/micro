@@ -2,29 +2,44 @@
     <BaseLayout>
     <template v-slot:center_column>
         <div class="container">
-            <div class="card" v-if="postDetails">
-                <div class="header">
-                    <div class="avatar">
-                        <img src="https://picsum.photos/150/" alt="User Avatar">
+            <main>
+                <div class="card" v-if="postDetails">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://picsum.photos/150/" alt="User Avatar">
+                        </div>
+                        <div class="user-info">
+                            <p class="name">{{ fullName }}</p>
+                            <p class="username">@{{ postDetails.user.username }}</p>
+                        </div>
                     </div>
-                    <div class="user-info">
-                        <p class="name">{{ fullName }}</p>
-                        <p class="username">@{{ postDetails.user.username }}</p>
+                    <div class="main-content">
+                        <p>{{ postDetails.content }}</p>
+                    </div>
+                    <div class="post-time">
+                        <p>{{ postDateTime }}</p>
                     </div>
                 </div>
-                <div class="main-content">
-                    <p>{{ postDetails.content }}</p>
+                <div class="post-stats">
+                    <div class="post-stats-item">
+                        <ReplyIcon />
+                        {{ postDetails && postDetails.comments.length }}
+                    </div>
+                    <div class="post-stats-item">
+                        <RepostIcon />
+                        {{ postDetails && postDetails.reposts.length }}
+                    </div>
+                    <div class="post-stats-item">
+                        <LikeIcon />
+                        {{ postDetails && postDetails.likes.length }}
+                    </div>
+                    <div class="post-stats-item">
+                        <FavouriteIcon />
+                        {{ postDetails && postDetails.bookmarks.length }}
+                    </div>
                 </div>
-                <div class="post-time">
-                    <p>{{ postDateTime }}</p>
-                </div>
-            </div>
-            <div class="post-stats">
-                <p><span>34K</span> Reposts</p>
-                <p><span>234</span> Quotes</p>
-                <p><span>434K</span> Likes</p>
-                <p><span>34</span> Bookmarks</p>
-            </div>
+                <CommentList v-if="postDetails" :comments="postDetails.comments" />
+            </main>
         </div>
     </template>
     </BaseLayout>
@@ -36,6 +51,12 @@ import { ref, computed } from "vue";
 import { useRouter } from 'vue-router';
 import axios from "axios";
 import { formatDateTime } from "@/utils/formatDateTime";
+import ReplyIcon from '@/components/icons/IconReply.vue';
+import LikeIcon from '@/components/icons/IconLike.vue';
+import RepostIcon from '@/components/icons/IconRepost.vue';
+import FavouriteIcon from '@/components/icons/IconFavourite.vue';
+import ShareIcon from '@/components/icons/IconShare.vue';
+import CommentList from '@/components/CommentList.vue';
 
 const router = useRouter()
 const postId = router.currentRoute.value.params.postId
@@ -64,13 +85,19 @@ getPostDetails()
 
 <style scoped>
 .container {
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 100vh;
 }
 
+main {
+    border-right: 1px solid #ccc;
+}
+
+
 .card {
-    width: 600px;
+    width: 100%;
     padding: 1rem;
-    border: 1px solid #ccc;
 }
 
 .header {
@@ -106,16 +133,19 @@ getPostDetails()
 
 .post-stats {
     display: flex;
-    width: 600px;
+    width: 100%;
     gap: 2rem;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
     padding: 1rem;
     color: #777;
+    justify-content: space-between;
 }
-.post-stats span {
-    color: #000;
-    font-weight: bold;
+
+.post-stats-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
 }
 </style>

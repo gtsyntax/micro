@@ -17,15 +17,15 @@
             <div class="stats">
                 <div class="stats-item reply-btn" @click="addCommentToPost(post.id)">
                     <ReplyIcon />
-                    0
+                    {{ post.comments.length }}
                 </div>
                 <div class="stats-item repost-btn" @click="repostPost(post.id)">
                     <RepostIcon />
-                    0
+                    {{ post.reposts.length }}
                 </div>
                 <div class="stats-item like-btn" @click="likePost(post.id)">
                     <LikeIcon />
-                    0
+                    {{ post.likes.length }}
                 </div>
                 <div class="stats-item">
                     <ViewIcon />

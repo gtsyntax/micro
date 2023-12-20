@@ -1,35 +1,39 @@
 <template>
     <BaseLayout>
     <template v-slot:center_column>
-        <div class="profile-header">
-            <div class="avatar">
-                <img src="https://picsum.photos/150/" alt="User Avatar">
-            </div>
-            <div class="user-info">
-                <div class="user-info-row-1">
-                    <div class="username">@{{ profileStore.userDetails.username }}</div>
-                    <div class="cta" v-if="accountStore.user.username !== username">
-                        <button class="btn" @click="followUser(username)">{{ checkFollowing }}</button>
-                        <button class="btn" @click="messageUser(username)">message</button>
+        <div class="container">
+            <main>
+                <div class="profile-header">
+                    <div class="avatar">
+                        <img src="https://picsum.photos/150/" alt="User Avatar">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-info-row-1">
+                            <div class="username">@{{ profileStore.userDetails.username }}</div>
+                            <div class="cta" v-if="accountStore.user.username !== username">
+                                <button class="btn" @click="followUser(username)">{{ checkFollowing }}</button>
+                                <button class="btn" @click="messageUser(username)">message</button>
+                            </div>
+                        </div>
+                        <div class="user-info-row-2">
+                            <p>{{ userPostCount }} posts</p>
+                            <p>{{ userFollowerCount }} followers</p>
+                            <p>{{ profileStore.userDetails.following }} following</p>
+                        </div>
+                        <div class="user-info-row-3">
+                            <div class="name">{{ fullName }}</div>
+                            <div class="bio">Front-End Developer</div>
+                            <div class="location">New York, USA</div>
+                            <div class="join-date">Joined {{ formattedDate }}</div>
+                        </div>
                     </div>
                 </div>
-                <div class="user-info-row-2">
-                    <p>{{ userPostCount }} posts</p>
-                    <p>{{ userFollowerCount }} followers</p>
-                    <p>{{ profileStore.userDetails.following }} following</p>
+                <div class="empty-post-list" v-if="postList.length === 0">
+                    <p>POSTS OF USERS YOU FOLLOW WILL APPEAR HERE.</p>
                 </div>
-                <div class="user-info-row-3">
-                    <div class="name">{{ fullName }}</div>
-                    <div class="bio">Front-End Developer</div>
-                    <div class="location">New York, USA</div>
-                    <div class="join-date">Joined {{ formattedDate }}</div>
-                </div>
-            </div>
+                <PostList :posts="postList" v-else/>
+            </main>
         </div>
-        <div class="empty-post-list" v-if="postList.length === 0">
-            <p>POSTS OF USERS YOU FOLLOW WILL APPEAR HERE.</p>
-        </div>
-        <PostList :posts="postList" v-else/>
     </template>
   </BaseLayout>
 </template>
@@ -122,6 +126,15 @@ const messageUser = username => {
 </script>
 
 <style scoped>
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 100vh;
+}
+
+main {
+    border-right: 1px solid #ccc;
+}
 .profile-header {
     display: flex;
     margin: 0 auto;
