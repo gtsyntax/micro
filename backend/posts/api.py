@@ -51,13 +51,14 @@ class PostViewSet(viewsets.ModelViewSet):
         post = self.get_object()
         user = request.user
 
-        if post.likes.filter(user=user).exists():
-            return Response({"message": "You have already liked this post."}, 
-                            status=status.HTTP_400_BAD_REQUEST)
-        # Create a new Like instance
-        like = Like(post=post, user=user)
-        like.save()
-        
+        existing_like = post.likes.filter(user=user).first()
+
+        if existing_like:
+            existing_like.delete()
+        else:
+            like = Like(post=post, user=user)
+            like.save()
+    
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -78,9 +79,13 @@ class PostViewSet(viewsets.ModelViewSet):
         post = self.get_object()
         user = request.user
 
-        # Create a new Bookmark instance
-        bookmark = Bookmark(post=post, user=user)
-        bookmark.save()
+        existing_bookmark = post.bookmarks.filter(user=user).first()
+
+        if existing_bookmark:
+            existing_bookmark.delete()
+        else:
+            bookmark = Bookmark(post=post, user=user)
+            bookmark.save()
         
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
