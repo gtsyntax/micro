@@ -65,7 +65,6 @@ function openSignInModal() {
   justify-content: center;
   gap: 2rem;
   min-height: 100vh;
-  border: 1px solid green;
 }
 .heading-lg {
   font-size: 64px;

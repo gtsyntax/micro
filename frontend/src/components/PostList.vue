@@ -20,7 +20,7 @@
                     {{ post.comments.length }}
                 </div>
                 <div class="stats-item repost-btn" @click="repostPost(post.id)">
-                    <RepostIcon />
+                    <RepostIcon :isReposted="post.isReposted"/>
                     {{ post.reposts.length }}
                 </div>
                 <div class="stats-item like-btn" @click="likePost(post.id)">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="other-btns">
-                <div class="stats-item">
+                <div class="stats-item" @click="bookmarkPost(post.id)">
                     <FavouriteIcon />
                 </div>
                 <div class="stats-item">
@@ -53,6 +53,11 @@ import ViewIcon from '@/components/icons/IconView.vue';
 import FavouriteIcon from '@/components/icons/IconFavourite.vue';
 import ShareIcon from '@/components/icons/IconShare.vue';
 import { formatRelativeTime } from '@/utils/formatTime';
+import axios from 'axios';
+import { useAccountStore} from "@/stores/account";
+import { computed } from 'vue';
+
+const accountStore = useAccountStore()
 
 const props = defineProps({
     posts: Array
@@ -62,12 +67,46 @@ const addCommentToPost = (postId) => {
     console.log(`${postId} comment added`);
 }
 
-const repostPost = (postId) => {
-    console.log(`${postId} reposted`);
+const repostPost = async (postId) => {
+    try {
+        const response = await axios.post(`/api/posts/${postId}/repost_post/`);
+        const index = accountStore.currentUserPosts.findIndex(post => post.id === postId);
+        if (index !== -1) {
+            accountStore.currentUserPosts[index] = response.data;
+        }
+        console.log('Repost successful:', response.data);
+    } catch (error) {
+        // Handle errors, e.g., display an error message
+        console.error('Error reposting post:', error); 
+    }
 }
 
-const likePost = (postId) => {
-    console.log(`${postId} liked`);
+const likePost = async (postId) => {
+    try {
+        const response = await axios.post(`/api/posts/${postId}/like_post/`);
+        const index = accountStore.currentUserPosts.findIndex(post => post.id === postId);
+        if (index !== -1) {
+            accountStore.currentUserPosts[index] = response.data;
+        }
+        console.log('Like successful:', response.data);
+    } catch (error) {
+        // Handle errors, e.g., display an error message
+        console.error('Error liking post:', error); 
+    }
+}
+
+const bookmarkPost = async (postId) => {
+    try {
+        const response = await axios.post(`/api/posts/${postId}/bookmark_post/`);
+        const index = accountStore.currentUserPosts.findIndex(post => post.id === postId);
+        if (index !== -1) {
+            accountStore.currentUserPosts[index] = response.data;
+        }
+        console.log('Bookmark successful:', response.data);
+    } catch (error) {
+        // Handle errors, e.g., display an error message
+        console.error('Error bookmarking post:', error); 
+    }
 }
 </script>
 
@@ -134,6 +173,10 @@ a {
     gap: 5px;
     align-items: center;
     transition: background-color 0.3s, color 0.3s;
+}
+
+.reposted {
+    color: rgb(0, 186, 124);
 }
 
 .reply-btn:hover {

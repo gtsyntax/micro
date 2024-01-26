@@ -38,6 +38,7 @@
                         {{ postDetails && postDetails.bookmarks.length }}
                     </div>
                 </div>
+                <CommentForm />
                 <CommentList v-if="postDetails" :comments="postDetails.comments" />
             </main>
         </div>
@@ -57,6 +58,7 @@ import RepostIcon from '@/components/icons/IconRepost.vue';
 import FavouriteIcon from '@/components/icons/IconFavourite.vue';
 import ShareIcon from '@/components/icons/IconShare.vue';
 import CommentList from '@/components/CommentList.vue';
+import CommentForm from '@/components/CommentForm.vue';
 
 const router = useRouter()
 const postId = router.currentRoute.value.params.postId

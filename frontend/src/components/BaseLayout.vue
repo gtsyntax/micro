@@ -7,7 +7,7 @@
                     <h2 class="menu-name">Home</h2>
                 </RouterLink>
 
-                <RouterLink to="#">
+                <!-- <RouterLink to="#">
                     <SearchIcon />
                     <h2 class="menu-name">Explore</h2>
                 </RouterLink>
@@ -27,10 +27,10 @@
                     <h2 class="menu-name">Communities</h2>
                 </RouterLink>
 
-                <RouterLink to="#">
+                <RouterLink to="/bookmarks">
                     <BookmarkIcon />
                     <h2 class="menu-name">Bookmarks</h2>
-                </RouterLink>
+                </RouterLink> -->
 
                 <RouterLink :to="{name: 'profile', params: {username:username}}">
                     <ProfileIcon />

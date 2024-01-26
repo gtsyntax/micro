@@ -16,3 +16,11 @@ def bookmark_post(request, post_id):
         Bookmark.objects.create(user=user, post=post)
         return Response({"message": "Post bookmarked successfully"}, status=status.HTTP_201_CREATED)
     return Response({"message": "You already bookmarked this post."}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_user_bookmarks(request):
+    user = request.user
+    bookmarks = Bookmark.objects.filter(user=user).all()
+    serializers = BookmarkSerializer(bookmarks, many=True)
+    return Response(serializers.data, status=status.HTTP_200_OK)
+
